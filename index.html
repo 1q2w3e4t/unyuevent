@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운유고등학교 이벤트</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            text-align: center;
+        }
+        nav a {
+            display: inline-block;
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .event-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .event-item {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .event-item h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .event-item p {
+            margin: 5px 0;
+        }
+        .event-date {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .event-details {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .application-form {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .application-form input, .application-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .application-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .application-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>운유고등학교 이벤트</h1>
+        <p>대황운유고의 이벤트들</p>
+    </header>
+
+    <nav>
+        <a href="#">홈</a>
+        <a href="#">이벤트</a>
+        <a href="#">공지사항</a>
+        <a href="#">연락처</a>
+    </nav>
+
+    <!-- 이벤트 신청 버튼 -->
+    <div class="container">
+        <h2>최신 이벤트</h2>
+        <button onclick="toggleApplicationForm()">이벤트 신청하기</button>
+    </div>
+
+    <div class="container">
+        <ul class="event-list">
+            <!-- 이벤트 항목 -->
+            <li class="event-item" onclick="toggleDetails('event1-details')">
+                <h3>운유고등학교 영화제</h3>
+                <p class="event-date">2025년 n월 n일</p>
+                <p>각 반이 영화를 촬영하고 친구들과 결과물을 공유하세요!</p>
+                <div id="event1-details" class="event-details">
+                    <p>참여 방법 : </p>
+                    <p>이벤트 기간 : </p>
+                    <p>이벤트 문의 : </p>
+                </div>
+            </li>
+
+            <!-- 다른 이벤트들 ... -->
+        </ul>
+    </div>
+
+    <!-- 이벤트 신청 -->
+    <div id="application-form" class="application-form">
+        <h4>이벤트 신청</h4>
+        <form id="event-form">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">연락처</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="planning">행사 개요</label>
+            <textarea id="planning" name="planning" rows="4" required></textarea>
+
+            <label for="overview">기획 의도</label>
+            <textarea id="overview" name="overview" rows="4" required></textarea>
+
+            <label for="reason">상세 내용</label>
+            <textarea id="reason" name="reason" rows="4" required></textarea>
+
+            <button type="button" onclick="saveFormData()">신청하기</button>
+        </form>
+    </div>
+
+    <script>
+        // 이벤트 상세정보 토글 함수
+        function toggleDetails(eventId) {
+            var details = document.getElementById(eventId);
+            details.style.display = (details.style.display === "none" || details.style.display === "") ? "block" : "none";
+        }
+
+        // 이벤트 신청 토글 함수
+        function toggleApplicationForm() {
+            var form = document.getElementById('application-form');
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+        }
+
+        // 신청 양식 데이터를 파일로 저장하는 함수
+        function saveFormData() {
+            var form = document.getElementById('event-form');
+            var name = form.querySelector('input[name="name"]').value;
+            var email = form.querySelector('input[name="email"]').value;
+            var planning = form.querySelector('textarea[name="planning"]').value;
+            var overview = form.querySelector('textarea[name="overview"]').value;
+            var reason = form.querySelector('textarea[name="reason"]').value;
+
+            // 저장할 텍스트 내용
+            var content = `이름: ${name}\n이메일: ${email}\n기획 의도: ${planning}\n행사 개요: ${overview}\n상세 내용: ${reason}`;
+
+            // Blob 객체로 텍스트 파일 생성
+            var blob = new Blob([content], { type: 'text/plain' });
+
+            // 파일 다운로드 링크 생성
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `이벤트_신청.txt`;
+
+            // 링크 클릭하여 파일 다운로드
+            link.click();
+        }
+    </script>
+
+</body>
+</html>
